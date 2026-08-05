@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>TinyTrek &mdash; the open-source robot car with a real vehicle network inside</title>
-<meta name="description" content="TinyTrek is an open-source robot car built around a real CAN bus. Separate motor and battery nodes, a Raspberry Pi gateway, and every board and file published.">
+<meta name="description" content="TinyTrek is an open-source robot car built around a real vehicle network. Separate motor and battery nodes, a Raspberry Pi gateway, and every board and file published.">
 <meta property="og:title" content="TinyTrek">
 <meta property="og:description" content="The open-source robot car with a real vehicle network inside.">
 <meta property="og:type" content="website">
@@ -20,9 +20,7 @@
 @font-face{
   font-family:"Shojumaru";
   src:url("Shojumaru-Regular.woff2") format("woff2");
-  font-weight:400;
-  font-style:normal;
-  font-display:block;
+  font-weight:400;font-style:normal;font-display:block;
 }
 :root{
   --paper:#F7F9FC;
@@ -30,7 +28,7 @@
   --blue:#1E45C8;
   --blue-deep:#12309A;
   --green:#2F9E52;
-  --amber:#F2A417;
+  --amber:#E09410;
   --ink:#0F1E38;
   --ink-mid:#41546E;
   --ink-dim:#6C7F96;
@@ -45,122 +43,108 @@
 html{-webkit-text-size-adjust:100%}
 body{
   margin:0;background:var(--paper);color:var(--ink);
-  font-family:var(--body);font-size:17px;line-height:1.55;
+  font-family:var(--body);line-height:1.5;
+  font-size:clamp(15px,1.02vw,17px);
   overflow-x:hidden;
 }
 img{max-width:100%;display:block}
-.wrap{max-width:1240px;margin:0 auto;padding:0 30px;position:relative;z-index:1}
+
+/* one-screen shell */
+.stage{
+  min-height:100svh;display:flex;flex-direction:column;
+  padding:clamp(20px,3.2vh,44px) 0 clamp(12px,1.8vh,22px);
+}
+.wrap{width:100%;max-width:1280px;margin:0 auto;padding:0 clamp(20px,3vw,42px);position:relative;z-index:1}
+.top{flex:1;display:flex;flex-direction:column;justify-content:center}
 
 /* ── decorative circuitry ───────────────────────── */
-.circuitry{position:absolute;top:0;left:0;right:0;height:520px;overflow:hidden;pointer-events:none;z-index:0}
+.circuitry{position:fixed;top:0;left:0;right:0;height:440px;overflow:hidden;pointer-events:none;z-index:0}
 .circuitry svg{position:absolute;top:0}
 .circuitry .tl{left:-40px}
 .circuitry .tr{right:-40px}
 
 /* ── hero ───────────────────────────────────────── */
-.hero{padding:54px 0 0}
-.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.02fr);gap:36px;align-items:center}
-
+.hero-grid{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.06fr);
+  gap:clamp(24px,3.4vw,56px);align-items:center;
+}
 .wordmark{
   font-family:var(--display);font-weight:400;
-  font-size:clamp(2.6rem,6.6vw,5.4rem);
+  font-size:clamp(2.3rem,5.2vw,4.6rem);
   line-height:1;letter-spacing:0;margin:0;
   color:var(--blue);text-transform:uppercase;
   filter:url(#stamp);
 }
-.rule{display:block;width:min(520px,94%);margin:10px 0 0;color:var(--blue)}
+.rule{display:block;width:min(500px,96%);margin:8px 0 0;color:var(--blue)}
 .tagline{
   font-family:var(--round);font-weight:700;
-  font-size:clamp(1.28rem,2.5vw,1.85rem);
-  line-height:1.24;color:var(--ink);margin:20px 0 0;max-width:19ch;
+  font-size:clamp(1.15rem,1.85vw,1.62rem);
+  line-height:1.22;color:var(--ink);margin:clamp(14px,2vh,22px) 0 0;max-width:20ch;
 }
 .tagline em{font-style:normal;color:var(--blue)}
 
-.points{list-style:none;margin:38px 0 0;padding:0;display:grid;gap:24px;max-width:470px}
-.points li{display:grid;grid-template-columns:56px 1fr;gap:18px;align-items:start}
+.points{list-style:none;margin:clamp(20px,3vh,34px) 0 0;padding:0;display:grid;gap:clamp(14px,2.1vh,22px);max-width:520px}
+.points li{display:grid;grid-template-columns:clamp(42px,3.6vw,52px) 1fr;gap:16px;align-items:start}
 .badge{
-  width:56px;height:56px;border-radius:50%;display:grid;place-items:center;
-  box-shadow:0 6px 14px rgba(15,30,56,.13);
+  width:clamp(42px,3.6vw,52px);height:clamp(42px,3.6vw,52px);border-radius:50%;
+  display:grid;place-items:center;box-shadow:0 6px 14px rgba(15,30,56,.13);
 }
-.badge svg{width:27px;height:27px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.badge svg{width:50%;height:50%;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .b-blue{background:var(--blue)}
 .b-green{background:var(--green)}
 .b-amber{background:var(--amber)}
 .points h2{
-  font-family:var(--round);font-weight:800;font-size:1.02rem;
-  letter-spacing:.06em;text-transform:uppercase;margin:6px 0 3px;
+  font-family:var(--round);font-weight:800;font-size:1rem;
+  letter-spacing:.06em;text-transform:uppercase;margin:4px 0 2px;
 }
 .points li:nth-child(1) h2{color:var(--blue)}
 .points li:nth-child(2) h2{color:var(--green)}
-.points li:nth-child(3) h2{color:#D18A00}
-.points p{margin:0;color:var(--ink-mid);font-size:1.02rem;line-height:1.45}
+.points li:nth-child(3) h2{color:#C07E00}
+.points p{margin:0;color:var(--ink-mid);font-size:1rem;line-height:1.42}
 
-.shot{position:relative}
-.shot img{width:100%;filter:drop-shadow(0 26px 34px rgba(15,30,56,.16))}
-.shot .stub{
-  position:absolute;right:6px;bottom:-6px;
-  font-family:var(--round);font-weight:700;font-size:.8rem;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--ink-dim);
+.shot img{
+  width:100%;max-height:min(58svh,600px);object-fit:contain;
+  filter:drop-shadow(0 24px 30px rgba(15,30,56,.16));
 }
-
-/* ── spec strip ─────────────────────────────────── */
-.strip{margin:74px 0 0}
-.strip-inner{
-  border:2px dashed #B9CDEB;border-radius:22px;background:rgba(255,255,255,.55);
-  padding:34px 12px;display:grid;grid-template-columns:repeat(4,1fr);
-}
-.cell{padding:0 26px;text-align:center;border-right:1px solid var(--hair)}
-.cell:last-child{border-right:0}
-.cell svg{width:38px;height:38px;stroke:var(--blue);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;margin:0 auto 12px}
-.cell h3{
-  font-family:var(--round);font-weight:800;font-size:.95rem;letter-spacing:.08em;
-  text-transform:uppercase;color:var(--blue-deep);margin:0 0 7px;
-}
-.cell p{margin:0;font-size:.94rem;color:var(--ink-mid);line-height:1.44}
 
 /* ── links ──────────────────────────────────────── */
-.links{margin:78px 0 0;text-align:center}
+.links{margin:clamp(26px,4.4vh,54px) 0 0;text-align:center}
 .links h2{
-  font-family:var(--round);font-weight:800;font-size:1.05rem;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--blue);margin:0 0 6px;
+  font-family:var(--round);font-weight:800;font-size:.95rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--blue);margin:0 0 4px;
 }
-.links .note{margin:0 0 26px;color:var(--ink-dim);font-size:.98rem}
-.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;max-width:920px;margin:0 auto}
+.links .note{margin:0 0 clamp(12px,1.8vh,20px);color:var(--ink-dim);font-size:.95rem}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;max-width:940px;margin:0 auto}
 .card{
-  display:flex;align-items:center;justify-content:center;gap:14px;
-  background:var(--card);border:1px solid var(--hair);border-radius:16px;
-  padding:22px 18px;text-decoration:none;color:var(--ink);
-  font-family:var(--round);font-weight:700;font-size:1.18rem;
+  display:flex;align-items:center;justify-content:center;gap:13px;
+  background:var(--card);border:1px solid var(--hair);border-radius:14px;
+  padding:clamp(13px,1.7vh,18px) 16px;text-decoration:none;color:var(--ink);
+  font-family:var(--round);font-weight:700;font-size:1.1rem;
   box-shadow:0 4px 14px rgba(15,30,56,.07);
   transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease;
 }
 .card:hover{transform:translateY(-3px);box-shadow:0 12px 24px rgba(15,30,56,.13);border-color:#C3D5F0}
 .card:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
-.card svg{width:28px;height:28px;flex:none}
-.card small{display:block;font-family:var(--body);font-weight:600;font-size:.78rem;color:var(--ink-dim);letter-spacing:.02em}
-.card .lbl{text-align:left;line-height:1.15}
+.card svg{width:26px;height:26px;flex:none}
+.card .lbl{text-align:left;line-height:1.14}
+.card small{display:block;font-family:var(--body);font-weight:600;font-size:.76rem;color:var(--ink-dim)}
 
-footer{margin:82px 0 0;border-top:1px solid var(--hair);background:rgba(255,255,255,.5)}
-footer .wrap{
-  display:flex;flex-wrap:wrap;gap:8px 28px;justify-content:space-between;
-  padding-top:22px;padding-bottom:34px;
-  font-size:.88rem;color:var(--ink-dim);
+.foot{
+  margin:clamp(16px,2.4vh,28px) 0 0;padding-top:12px;border-top:1px solid var(--hair);
+  display:flex;flex-wrap:wrap;gap:6px 24px;justify-content:space-between;
+  font-size:.82rem;color:var(--ink-dim);
 }
 
-@media (max-width:1000px){
-  .hero-grid{grid-template-columns:1fr;gap:24px}
-  .shot{order:-1;max-width:560px;margin:0 auto}
+@media (max-width:980px){
+  .stage{min-height:0;padding-top:28px}
+  .hero-grid{grid-template-columns:1fr;gap:20px}
+  .shot{order:-1;max-width:520px;margin:0 auto}
+  .shot img{max-height:none}
   .points{max-width:none}
-  .strip-inner{grid-template-columns:repeat(2,1fr);row-gap:30px}
-  .cell:nth-child(2){border-right:0}
+  .circuitry{position:absolute}
 }
 @media (max-width:640px){
-  body{font-size:16px}
-  .wrap{padding:0 20px}
   .circuitry{display:none}
-  .strip-inner{grid-template-columns:1fr;padding:28px 8px}
-  .cell{border-right:0;border-bottom:1px solid var(--hair);padding-bottom:26px}
-  .cell:last-child{border-bottom:0;padding-bottom:0}
   .cards{grid-template-columns:1fr}
   .card{justify-content:flex-start}
 }
@@ -204,116 +188,81 @@ footer .wrap{
   </svg>
 </div>
 
-<main>
-<section class="hero">
-  <div class="wrap hero-grid">
+<div class="stage">
 
-    <div>
-      <h1 class="wordmark">Tiny Trek</h1>
-      <svg class="rule" viewBox="0 0 430 26" aria-hidden="true" style="filter:url(#stamp)">
-        <path d="M4 17c96-9 214-13 330-11 34 1 62 2 92 4-40 4-96 6-160 6-92 0-190 3-262 1z" fill="currentColor"/>
-      </svg>
+  <main class="top">
+    <div class="wrap hero-grid">
 
-      <p class="tagline">The open-source robot car with a <em>real vehicle network</em> inside.</p>
+      <div>
+        <h1 class="wordmark">Tiny Trek</h1>
+        <svg class="rule" viewBox="0 0 430 26" aria-hidden="true" style="filter:url(#stamp)">
+          <path d="M4 17c96-9 214-13 330-11 34 1 62 2 92 4-40 4-96 6-160 6-92 0-190 3-262 1z" fill="currentColor"/>
+        </svg>
 
-      <ul class="points">
-        <li>
-          <span class="badge b-blue"><svg viewBox="0 0 24 24"><path d="M9 7l-5 5 5 5M15 7l5 5-5 5"/></svg></span>
-          <div>
-            <h2>Open source</h2>
-            <p>Firmware, board files, and course material. Build it, break it, make it yours.</p>
-          </div>
-        </li>
-        <li>
-          <span class="badge b-green"><svg viewBox="0 0 24 24"><path d="M2 8.5 12 4l10 4.5L12 13 2 8.5z"/><path d="M6 10.6V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-5.4"/></svg></span>
-          <div>
-            <h2>Built for teaching</h2>
-            <p>Written for a semester course where students wire the power, the bus, and every node themselves.</p>
-          </div>
-        </li>
-        <li>
-          <span class="badge b-amber"><svg viewBox="0 0 24 24"><path d="M15.5 3.5a5.5 5.5 0 0 0-6.9 6.9L3 16v5h5l5.6-5.6a5.5 5.5 0 0 0 6.9-6.9l-3.3 3.3-2.8-.7-.7-2.8 3.3-3.3z"/></svg></span>
-          <div>
-            <h2>Made to tinker</h2>
-            <p>Add a node, rewrite the firmware, rewire the bus. Nothing is locked and nothing is simulated.</p>
-          </div>
-        </li>
-      </ul>
-    </div>
+        <p class="tagline">The open-source robot car with a <em>real vehicle network</em> inside.</p>
 
-    <figure class="shot">
-      <img src="tinytrek-car.png" alt="A TinyTrek car: a blue chassis carrying stepper driver boards, a battery controller, and a Raspberry Pi CAN interface, wired together with a coloured harness.">
-      <figcaption class="stub">&nbsp;</figcaption>
-    </figure>
-
-  </div>
-</section>
-
-<section class="strip">
-  <div class="wrap">
-    <div class="strip-inner">
-
-      <div class="cell">
-        <svg viewBox="0 0 24 24"><path d="M10 3h4v3.2a1.6 1.6 0 1 0 3.2 0V3H21v4.8h-3.2a1.6 1.6 0 1 0 0 3.2H21V21h-4.8v-3.2a1.6 1.6 0 1 0-3.2 0V21H3v-6.6h3.2a1.6 1.6 0 1 0 0-3.2H3V3z"/></svg>
-        <h3>Modular</h3>
-        <p>Every board is its own node. Add one, swap one, or design your own.</p>
+        <ul class="points">
+          <li>
+            <span class="badge b-blue"><svg viewBox="0 0 24 24"><path d="M10 3h4v3.2a1.6 1.6 0 1 0 3.2 0V3H21v4.8h-3.2a1.6 1.6 0 1 0 0 3.2H21V21h-4.8v-3.2a1.6 1.6 0 1 0-3.2 0V21H3v-6.6h3.2a1.6 1.6 0 1 0 0-3.2H3V3z"/></svg></span>
+            <div>
+              <h2>Modular</h2>
+              <p>Every board is its own node. Add one, swap one, or design your own.</p>
+            </div>
+          </li>
+          <li>
+            <span class="badge b-green"><svg viewBox="0 0 24 24"><rect x="8" y="8" width="8" height="8" rx="2"/><path d="M10.5 3v5M13.5 3v5M10.5 16v5M13.5 16v5M3 10.5h5M3 13.5h5M16 10.5h5M16 13.5h5"/></svg></span>
+            <div>
+              <h2>Real vehicle network</h2>
+              <p>Nodes speak the same protocol as the car in your driveway.</p>
+            </div>
+          </li>
+          <li>
+            <span class="badge b-amber"><svg viewBox="0 0 24 24"><path d="M12 3 3 7.5v9L12 21l9-4.5v-9L12 3z"/><path d="M3 7.5 12 12l9-4.5M12 12v9"/></svg></span>
+            <div>
+              <h2>Open hardware</h2>
+              <p>Schematics, Gerbers, and STLs, not just source. Easy to modify for your environment.</p>
+            </div>
+          </li>
+        </ul>
       </div>
 
-      <div class="cell">
-        <svg viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="2"/><path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4"/></svg>
-        <h3>Real CAN bus</h3>
-        <p>Motor and battery controllers speak the same protocol as the car in your driveway.</p>
-      </div>
-
-      <div class="cell">
-        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>
-        <h3>For classrooms</h3>
-        <p>Labs, lecture notes, and a parts list that fits a department budget.</p>
-      </div>
-
-      <div class="cell">
-        <svg viewBox="0 0 24 24"><path d="M12 3 3 7.5v9L12 21l9-4.5v-9L12 3z"/><path d="M3 7.5 12 12l9-4.5M12 12v9"/></svg>
-        <h3>Open hardware</h3>
-        <p>Schematics and CAD, not just source. Nothing is locked to a kit you have to buy.</p>
-      </div>
+      <figure class="shot" style="margin:0">
+        <img src="tinytrek-car.png" alt="A TinyTrek car: a blue chassis carrying stepper driver boards, a battery controller, and a Raspberry Pi CAN interface, wired together with a coloured harness.">
+      </figure>
 
     </div>
-  </div>
-</section>
+  </main>
 
-<section class="links">
-  <div class="wrap">
-    <h2>Start here</h2>
-    <p class="note">The code and the boards are on GitHub. Everything else is us thinking out loud.</p>
+  <section class="links">
+    <div class="wrap">
 
-    <div class="cards">
-      <!-- ── EDIT LINKS HERE ─────────────────────────────── -->
-      <a class="card" href="https://github.com/sixvolts/TinyTrek">
-        <svg viewBox="0 0 24 24" fill="#0F1E38"><path d="M12 .5C5.7.5.6 5.6.6 11.9c0 5 3.3 9.3 7.8 10.8.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.8 2.7 1.3 3.4 1 .1-.7.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.2-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.9 1.2 1.9 1.2 3.2 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.8.6a11.4 11.4 0 0 0 7.8-10.8C23.4 5.6 18.3.5 12 .5z"/></svg>
-        <span class="lbl">GitHub<small>Code, boards, docs</small></span>
-      </a>
+      <div class="cards">
+        <!-- ── EDIT LINKS HERE ─────────────────────────────── -->
+        <a class="card" href="https://github.com/sixvolts/TinyTrek">
+          <svg viewBox="0 0 24 24" fill="#0F1E38"><path d="M12 .5C5.7.5.6 5.6.6 11.9c0 5 3.3 9.3 7.8 10.8.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.8 2.7 1.3 3.4 1 .1-.7.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.2-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.9 1.2 1.9 1.2 3.2 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.8.6a11.4 11.4 0 0 0 7.8-10.8C23.4 5.6 18.3.5 12 .5z"/></svg>
+          <span class="lbl">GitHub<small>Code, CAD, and docs</small></span>
+        </a>
 
-      <a class="card" href="#REPLACE-WITH-YOUTUBE-URL">
-        <svg viewBox="0 0 24 24"><rect x="1.5" y="4.8" width="21" height="14.4" rx="4.2" fill="#FF0033" stroke="none"/><path d="M10 9.2l5.6 2.8L10 14.8z" fill="#fff" stroke="none"/></svg>
-        <span class="lbl">YouTube<small>Builds and teardowns</small></span>
-      </a>
+        <a class="card" href="#REPLACE-WITH-YOUTUBE-URL">
+          <svg viewBox="0 0 24 24"><rect x="1.5" y="4.8" width="21" height="14.4" rx="4.2" fill="#FF0033" stroke="none"/><path d="M10 9.2l5.6 2.8L10 14.8z" fill="#fff" stroke="none"/></svg>
+          <span class="lbl">YouTube<small>Intro Video</small></span>
+        </a>
 
-      <a class="card" href="#REPLACE-WITH-BLUESKY-URL">
-        <svg viewBox="0 0 24 24" fill="#0A84FF" stroke="none"><path d="M12 10.8C10.9 8.6 7.9 4.5 5.2 2.6 2.6.8 1.6 1.1 1 1.4.2 1.8 0 3 0 3.7c0 .7.4 5.9.7 6.8.9 2.8 3.9 3.8 6.6 3.5h.4c-2.8.5-5.2 1.5-2 5.1 3.5 3.7 4.8-.8 5.5-3.1.7 2.3 1.4 6.6 5.4 3.1 3-3.1.9-4.6-1.9-5.1h.4c2.7.3 5.7-.7 6.6-3.5.3-.9.7-6.1.7-6.8 0-.7-.2-1.9-1-2.3-.6-.3-1.6-.6-4.2 1.2-2.7 1.9-5.7 6-6.8 8.2z"/></svg>
-        <span class="lbl">Bluesky<small>Progress and smoke</small></span>
-      </a>
-      <!-- ────────────────────────────────────────────────── -->
+        <a class="card" href="#REPLACE-WITH-BLUESKY-URL">
+          <svg viewBox="0 0 24 24" fill="#0A84FF" stroke="none"><path d="M12 10.8C10.9 8.6 7.9 4.5 5.2 2.6 2.6.8 1.6 1.1 1 1.4.2 1.8 0 3 0 3.7c0 .7.4 5.9.7 6.8.9 2.8 3.9 3.8 6.6 3.5h.4c-2.8.5-5.2 1.5-2 5.1 3.5 3.7 4.8-.8 5.5-3.1.7 2.3 1.4 6.6 5.4 3.1 3-3.1.9-4.6-1.9-5.1h.4c2.7.3 5.7-.7 6.6-3.5.3-.9.7-6.1.7-6.8 0-.7-.2-1.9-1-2.3-.6-.3-1.6-.6-4.2 1.2-2.7 1.9-5.7 6-6.8 8.2z"/></svg>
+          <span class="lbl">Bluesky<small>Project Updates</small></span>
+        </a>
+        <!-- ────────────────────────────────────────────────── -->
+      </div>
+
+      <div class="foot">
+        <span>TinyTrek &mdash; open source, all of it</span>
+        <span>Built by sixvolts and friends</span>
+      </div>
     </div>
-  </div>
-</section>
-</main>
+  </section>
 
-<footer>
-  <div class="wrap">
-    <span>TinyTrek &mdash; open source, all of it</span>
-    <span>Built by sixvolts and friends</span>
-  </div>
-</footer>
+</div>
 
 </body>
 </html>
