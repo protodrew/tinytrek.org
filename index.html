@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>TinyTrek &mdash; the open-source robot car with a real vehicle network inside</title>
-<meta name="description" content="TinyTrek is an open-source robot car built around a real CAN bus. ">
+<meta name="description" content="TinyTrek is an open-source robot car built around a real CAN bus. Separate motor and battery nodes, a Raspberry Pi gateway, and every board and file published.">
 <meta property="og:title" content="TinyTrek">
 <meta property="og:description" content="The open-source robot car with a real vehicle network inside.">
 <meta property="og:type" content="website">
@@ -12,9 +12,18 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Baloo+2:wght@600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="preload" href="Shojumaru-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
 <style>
+/* Shojumaru by Fontdiner / Sideshow, SIL Open Font License 1.1 */
+@font-face{
+  font-family:"Shojumaru";
+  src:url("Shojumaru-Regular.woff2") format("woff2");
+  font-weight:400;
+  font-style:normal;
+  font-display:block;
+}
 :root{
   --paper:#F7F9FC;
   --card:#FFFFFF;
@@ -28,7 +37,7 @@
   --trace:#CBDCF7;
   --hair:#DCE6F5;
 
-  --display:"Anton","Haettenschweiler","Arial Narrow",sans-serif;
+  --display:"Shojumaru","Baloo 2",system-ui,sans-serif;
   --round:"Baloo 2",system-ui,sans-serif;
   --body:"Nunito Sans",system-ui,-apple-system,sans-serif;
 }
@@ -54,12 +63,12 @@ img{max-width:100%;display:block}
 
 .wordmark{
   font-family:var(--display);font-weight:400;
-  font-size:clamp(3.6rem,9.2vw,7.4rem);
-  line-height:.9;letter-spacing:.005em;margin:0;
+  font-size:clamp(2.6rem,6.6vw,5.4rem);
+  line-height:1;letter-spacing:0;margin:0;
   color:var(--blue);text-transform:uppercase;
   filter:url(#stamp);
 }
-.rule{display:block;width:min(430px,86%);margin:8px 0 0;color:var(--blue)}
+.rule{display:block;width:min(520px,94%);margin:10px 0 0;color:var(--blue)}
 .tagline{
   font-family:var(--round);font-weight:700;
   font-size:clamp(1.28rem,2.5vw,1.85rem);
@@ -163,8 +172,8 @@ footer .wrap{
 <!-- rough-stamp filter for the wordmark -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <filter id="stamp" x="-6%" y="-6%" width="112%" height="112%">
-    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="7" result="n"/>
-    <feDisplacementMap in="SourceGraphic" in2="n" scale="3.4" xChannelSelector="R" yChannelSelector="G"/>
+    <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="3" seed="7" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/>
   </filter>
 </svg>
 
